@@ -56,7 +56,8 @@ always wins:
 | Date and money formats | `d M Y H:i:s`, `EUR` |
 
 **Shared UI** — the `⌘K` trigger, expand/collapse-all for the sidebar, a panel error page,
-a loading skeleton, and the `HasReadOnlyBadge` concern for resources synced from elsewhere.
+a loading skeleton, `CopyTranslationAction`, and the `HasReadOnlyBadge` concern for
+resources synced from elsewhere.
 
 **Drafts and live preview** — `oddvalue/laravel-drafts` and `wotz/filament-live-preview`
 are wired up: the plugins are registered, draft previews are disabled inside the panel, and
