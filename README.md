@@ -71,8 +71,67 @@ class EditPage extends EditRecord
 }
 ```
 
-`HandlesDraftsOnCreate` does the same for create pages. Your model still opts in with the
-package's own `HasDrafts` trait. If a project has no use for either, drop them:
+### Opting a resource in
+
+The package registers the plugins, but nothing appears until a resource opts in — a panel
+with the plugins loaded and no traits applied shows no Preview or draft actions at all.
+
+**On the model:**
+
+```php
+use Oddvalue\LaravelDrafts\Concerns\HasDrafts;
+use Wotz\FilamentBrigadaCms\Models\Concerns\HandlesTranslatableDrafts;
+
+class Page extends Model
+{
+    use HasDrafts;
+    use HandlesTranslatableDrafts;   // translatable models only, see below
+}
+```
+
+`HandlesTranslatableDrafts` matters more than it looks: `laravel-drafts` copies raw
+attributes, so a `spatie/laravel-translatable` model loses every locale but the current one
+the first time a draft is saved.
+
+Add the columns with the migration helper the drafts package ships:
+
+```php
+Schema::table('pages', fn (Blueprint $table) => $table->drafts());
+```
+
+**On the pages:**
+
+```php
+class EditPage extends EditRecord
+{
+    use HandlesDraftsOnEdit;
+    use HasLivePreviewComponent;   // from wotz/filament-live-preview
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            $this->getLivePreviewAction(),
+            $this->getSwitchVersionAction(),
+            $this->getSaveFormAction()->submit(null)->action('save'),
+            $this->getSaveDraftAction(),
+            $this->getPublishAction(),
+        ];
+    }
+
+    protected function getPreviewModalView(): ?string
+    {
+        return 'page.show';
+    }
+
+    protected function getPreviewModalDataRecordKey(): ?string
+    {
+        return 'page';
+    }
+}
+```
+
+Live preview renders your own front-end view, so it only applies to resources that have
+one. If a project has no use for either, drop them:
 
 ```php
 protected function plugins(): array
