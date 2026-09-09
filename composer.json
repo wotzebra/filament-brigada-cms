@@ -1,0 +1,98 @@
+{
+    "name": "wotz/filament-brigada-cms",
+    "description": "The conventions, defaults and shared UI behind a Brigada Filament CMS",
+    "keywords": [
+        "who owns the zebra",
+        "brigada",
+        "laravel",
+        "filament",
+        "cms"
+    ],
+    "homepage": "https://github.com/wotzebra/filament-brigada-cms",
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "awcodes/filament-sticky-header": "^4.0",
+        "awcodes/richer-editor": "^2.1",
+        "alizharb/filament-activity-log": "^2.0",
+        "azgasim/filament-unsaved-changes-modal": "^1.0",
+        "bezhansalleh/filament-shield": "^4.1",
+        "filament/filament": "^5.5",
+        "illuminate/contracts": "^12.0|^13.0",
+        "livewire/livewire": "^4.0",
+        "parfaitementweb/filament-password-input": "^4.1",
+        "pxlrbt/filament-environment-indicator": "^3.4",
+        "spatie/eloquent-sortable": "^5.0",
+        "spatie/laravel-package-tools": "^1.12",
+        "spatie/laravel-sluggable": "^4.0",
+        "spatie/laravel-translatable": "^6.11",
+        "wezlo/filament-search-spotlight": "^1.0",
+        "wotz/filament-admin-bar": "^2.1",
+        "wotz/filament-architect": "^3.1",
+        "wotz/filament-belongs-to-many": "^2.2",
+        "wotz/filament-brigada-theme": "^0.1",
+        "wotz/filament-custom-tiptap-extensions": "^2.2",
+        "wotz/filament-image-or-video": "^2.2",
+        "wotz/filament-link-picker": "^2.2",
+        "wotz/filament-media-library": "^4.6",
+        "wotz/filament-menu": "^3.2",
+        "wotz/filament-redirects": "^3.0",
+        "wotz/filament-resource-picker": "^2.1",
+        "wotz/filament-seo": "^4.0",
+        "wotz/filament-settings": "^2.3",
+        "wotz/filament-table-filter-presets": "^0.5",
+        "wotz/filament-translatable-strings": "^3.0",
+        "wotz/filament-translatable-tabs": "^3.0",
+        "wotz/laravel-locale-collection": "^2.1",
+        "wotz/laravel-online-scope": "^2.1",
+        "wotz/laravel-translatable-routes": "^2.1"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^8.0",
+        "orchestra/testbench": "^10.0|^11.0",
+        "pestphp/pest": "^3.0|^4.0",
+        "pestphp/pest-plugin-laravel": "^3.0|^4.0",
+        "phpstan/extension-installer": "^2.0",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0"
+    },
+    "suggest": {
+        "petercoles/multilingual-country-list": "Localised country lists",
+        "spatie/laravel-sitemap": "XML sitemap generation",
+        "wotz/filament-mail-templates": "Editable transactional mail templates",
+        "wotz/filament-social-media-links": "Social profile links",
+        "wotz/laravel-livewire-forms": "Front-end form building",
+        "wotz/laravel-social-media-share": "Share buttons"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wotz\\FilamentBrigadaCms\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Wotz\\FilamentBrigadaCms\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Wotz\\FilamentBrigadaCms\\Providers\\BrigadaCmsServiceProvider"
+            ]
+        }
+    },
+    "support": {
+        "email": "info@whoownsthezebra.be"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
