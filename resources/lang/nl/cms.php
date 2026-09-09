@@ -13,6 +13,13 @@ return [
         'collapse_all' => 'Alles dichtklappen',
     ],
 
+    'drafts' => [
+        'publish' => 'Publiceren',
+        'save_draft' => 'Opslaan als nieuw concept',
+        'create_draft' => 'Concept aanmaken',
+        'version' => 'Versie',
+    ],
+
     'search' => [
         'placeholder' => 'Zoeken',
     ],

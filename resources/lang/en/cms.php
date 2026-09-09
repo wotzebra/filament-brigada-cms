@@ -13,6 +13,13 @@ return [
         'collapse_all' => 'Collapse all',
     ],
 
+    'drafts' => [
+        'publish' => 'Publish',
+        'save_draft' => 'Save to new draft',
+        'create_draft' => 'Create draft',
+        'version' => 'Version',
+    ],
+
     'search' => [
         'placeholder' => 'Search',
     ],

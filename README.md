@@ -58,6 +58,32 @@ always wins:
 **Shared UI** — the `⌘K` trigger, expand/collapse-all for the sidebar, a panel error page,
 a loading skeleton, and the `HasReadOnlyBadge` concern for resources synced from elsewhere.
 
+**Drafts and live preview** — `oddvalue/laravel-drafts` and `wotz/filament-live-preview`
+are wired up: the plugins are registered, draft previews are disabled inside the panel, and
+two concerns add the actions to a resource's pages.
+
+```php
+use Wotz\FilamentBrigadaCms\Filament\Concerns\HandlesDraftsOnEdit;
+
+class EditPage extends EditRecord
+{
+    use HandlesDraftsOnEdit;   // Publish, Save to new draft, Version switcher
+}
+```
+
+`HandlesDraftsOnCreate` does the same for create pages. Your model still opts in with the
+package's own `HasDrafts` trait. If a project has no use for either, drop them:
+
+```php
+protected function plugins(): array
+{
+    $plugins = parent::plugins();
+    unset($plugins['live-preview'], $plugins['peek']);
+
+    return $plugins;
+}
+```
+
 ## Overriding
 
 Every method on `BrigadaPanelProvider` is a seam. Append rather than replace:

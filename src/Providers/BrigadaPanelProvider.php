@@ -13,6 +13,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Enums\Width;
 use Filament\View\PanelsRenderHook;
+use Pboivin\FilamentPeek\FilamentPeekPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -25,7 +26,9 @@ use Wezlo\FilamentSearchSpotlight\Categories\RecordsCategory;
 use Wezlo\FilamentSearchSpotlight\FilamentSearchSpotlightPlugin;
 use Wotz\FilamentBrigadaCms\Filament\Spotlight\AccessAwareActionsCategory;
 use Wotz\FilamentBrigadaCms\Filament\Spotlight\NavigationCategory;
+use Wotz\FilamentBrigadaCms\Http\Middleware\DisableDraftPreview;
 use Wotz\FilamentBrigadaTheme\Filament\BrigadaThemePlugin;
+use Wotz\FilamentLivePreview\LivePreviewPlugin;
 use Wotz\FilamentMenu\Filament\MenuPlugin;
 use Wotz\FilamentRedirects\Filament\RedirectsPlugin;
 use Wotz\FilamentSettings\Filament\SettingsPlugin;
@@ -103,6 +106,14 @@ abstract class BrigadaPanelProvider extends PanelProvider
             'redirects' => RedirectsPlugin::make(),
             'environment-indicator' => EnvironmentIndicatorPlugin::make()->showBorder(false),
             'unsaved-changes' => FilamentUnsavedChangesModalPlugin::make(),
+            'live-preview' => LivePreviewPlugin::make(),
+            /*
+             * Peek ships its own styles and scripts, which fight the theme's; live preview
+             * only needs the modal machinery underneath.
+             */
+            'peek' => FilamentPeekPlugin::make()
+                ->disablePluginScripts()
+                ->disablePluginStyles(),
             'spotlight' => FilamentSearchSpotlightPlugin::make()->categories($this->spotlightCategories()),
         ];
     }
@@ -134,6 +145,11 @@ abstract class BrigadaPanelProvider extends PanelProvider
             SubstituteBindings::class,
             DisableBladeIconComponents::class,
             DispatchServingFilamentEvent::class,
+            /*
+             * Drafts render a preview of the unpublished version on the front end; inside
+             * the panel the current record is what should be edited.
+             */
+            DisableDraftPreview::class,
         ];
     }
 
