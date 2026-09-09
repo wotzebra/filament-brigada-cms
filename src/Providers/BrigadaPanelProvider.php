@@ -51,7 +51,7 @@ abstract class BrigadaPanelProvider extends PanelProvider
         return $panel
             ->id($this->id())
             ->path($this->path())
-            ->plugins($this->plugins())
+            ->plugins(array_values($this->plugins()))
             ->middleware($this->middleware())
             ->authMiddleware($this->authMiddleware())
             ->userMenuItems($this->userMenuItems())
@@ -76,26 +76,34 @@ abstract class BrigadaPanelProvider extends PanelProvider
     }
 
     /**
-     * The standard plugin set. Project-specific plugins belong in the subclass.
+     * The standard plugin set, keyed so a project can reconfigure one without rebuilding
+     * the list. Plugin objects are mutable, so reach in and adjust:
      *
-     * @return array<int, mixed>
+     *     $plugins = parent::plugins();
+     *     $plugins['shield']->navigationGroup(NavigationGroup::General);
+     *
+     *     return [...$plugins, 'live-preview' => LivePreviewPlugin::make()];
+     *
+     * Drop one with `unset($plugins['seo'])`.
+     *
+     * @return array<string, mixed>
      */
     protected function plugins(): array
     {
         return [
-            BrigadaThemePlugin::make(),
-            FilamentShieldPlugin::make(),
-            ActivityLogPlugin::make(),
-            StickyHeaderPlugin::make()->floating(),
-            TranslatableStringsPlugin::make(),
-            MenuPlugin::make(),
-            SettingsPlugin::make(),
-            MediaLibraryPlugin::make(),
-            SeoPlugin::make(),
-            RedirectsPlugin::make(),
-            EnvironmentIndicatorPlugin::make()->showBorder(false),
-            FilamentUnsavedChangesModalPlugin::make(),
-            FilamentSearchSpotlightPlugin::make()->categories($this->spotlightCategories()),
+            'theme' => BrigadaThemePlugin::make(),
+            'shield' => FilamentShieldPlugin::make(),
+            'activity-log' => ActivityLogPlugin::make(),
+            'sticky-header' => StickyHeaderPlugin::make()->floating(),
+            'translatable-strings' => TranslatableStringsPlugin::make(),
+            'menu' => MenuPlugin::make(),
+            'settings' => SettingsPlugin::make(),
+            'media-library' => MediaLibraryPlugin::make(),
+            'seo' => SeoPlugin::make(),
+            'redirects' => RedirectsPlugin::make(),
+            'environment-indicator' => EnvironmentIndicatorPlugin::make()->showBorder(false),
+            'unsaved-changes' => FilamentUnsavedChangesModalPlugin::make(),
+            'spotlight' => FilamentSearchSpotlightPlugin::make()->categories($this->spotlightCategories()),
         ];
     }
 

@@ -65,7 +65,11 @@ Every method on `BrigadaPanelProvider` is a seam. Append rather than replace:
 ```php
 protected function plugins(): array
 {
-    return [...parent::plugins(), LivePreviewPlugin::make()];
+    // Keyed, so you can reconfigure one without rebuilding the list.
+    $plugins = parent::plugins();
+    $plugins['shield']->navigationGroup(NavigationGroup::General);
+
+    return [...$plugins, 'live-preview' => LivePreviewPlugin::make()];
 }
 
 protected function userMenuItems(): array
