@@ -10,6 +10,31 @@ trait HandlesDraftsOnCreate
 {
     protected bool $shouldSaveAsDraft = true;
 
+    /**
+     * The draft actions in their intended order, for the head of a create page. The
+     * counterpart to `HandlesDraftsOnEdit::getDraftHeaderActions()`:
+     *
+     *     protected function getHeaderActions(): array
+     *     {
+     *         return [
+     *             ...$this->getDraftHeaderActions(),
+     *             $this->getCancelFormAction(),
+     *         ];
+     *     }
+     *
+     * Live preview is included when the page also uses `HasLivePreviewComponent`.
+     *
+     * @return array<int, Action>
+     */
+    protected function getDraftHeaderActions(): array
+    {
+        return array_values(array_filter([
+            method_exists($this, 'getLivePreviewAction') ? $this->getLivePreviewAction() : null,
+            $this->getCreateFormAction()->submit(null)->action('create'),
+            $this->getCreateAnotherFormAction(),
+        ]));
+    }
+
     protected function getSaveDraftAction(): Action
     {
         return SaveDraftAction::make('saveDraft')
