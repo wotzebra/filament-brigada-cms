@@ -10,7 +10,14 @@ namespace Wotz\FilamentBrigadaCms\Models\Concerns;
  * current locale resolved to, so every other locale is lost the moment a draft is saved.
  * Merging the full translation set back in keeps them.
  *
- * Use alongside `Oddvalue\LaravelDrafts\Concerns\HasDrafts` on any translatable model.
+ * Use alongside `Oddvalue\LaravelDrafts\Concerns\HasDrafts` on any translatable model. Both
+ * declare `getDraftableAttributes()`, so the collision has to be resolved explicitly or PHP
+ * fatals:
+ *
+ *     use HandlesTranslatableDrafts {
+ *         HandlesTranslatableDrafts::getDraftableAttributes insteadof HasDrafts;
+ *     }
+ *     use HasDrafts;
  */
 trait HandlesTranslatableDrafts
 {

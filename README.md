@@ -84,14 +84,19 @@ use Wotz\FilamentBrigadaCms\Models\Concerns\HandlesTranslatableDrafts;
 
 class Page extends Model
 {
+    use HandlesTranslatableDrafts {
+        HandlesTranslatableDrafts::getDraftableAttributes insteadof HasDrafts;
+    }
     use HasDrafts;
-    use HandlesTranslatableDrafts;   // translatable models only, see below
 }
 ```
 
+The `insteadof` is required, not stylistic: both traits define `getDraftableAttributes()`,
+and PHP fatals on the collision without it.
+
 `HandlesTranslatableDrafts` matters more than it looks: `laravel-drafts` copies raw
 attributes, so a `spatie/laravel-translatable` model loses every locale but the current one
-the first time a draft is saved.
+the first time a draft is saved. On a model that is not translatable, use `HasDrafts` alone.
 
 Add the columns with the migration helper the drafts package ships:
 
