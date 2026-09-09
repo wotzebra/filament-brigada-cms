@@ -133,8 +133,28 @@ class EditPage extends EditRecord
 }
 ```
 
+The create page is the same shape, with its own helper:
+
+```php
+class CreatePage extends CreateRecord
+{
+    use HandlesDraftsOnCreate;
+    use HasLivePreviewComponent;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            ...$this->getDraftHeaderActions(),
+            $this->getCancelFormAction(),
+        ];
+    }
+
+    // getPreviewModalView() and getPreviewModalDataRecordKey() as above
+}
+```
+
 Live preview renders your own front-end view, so it only applies to resources that have
-one. If a project has no use for either, drop them:
+one — and it has to be wired on **both** the create and edit pages, not just edit. If a project has no use for either, drop them:
 
 ```php
 protected function plugins(): array
