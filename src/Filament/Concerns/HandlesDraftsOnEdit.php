@@ -13,6 +13,36 @@ trait HandlesDraftsOnEdit
 {
     protected bool $shouldSaveAsDraft = false;
 
+    /**
+     * The draft actions in their intended order, for the head of an edit page.
+     *
+     * Spread these rather than listing them one by one, so the arrangement stays the same
+     * across projects and a change to it arrives with the package:
+     *
+     *     protected function getHeaderActions(): array
+     *     {
+     *         return [
+     *             ...$this->getDraftHeaderActions(),
+     *             DeleteAction::make(),
+     *         ];
+     *     }
+     *
+     * Live preview is included when the page also uses `HasLivePreviewComponent`, so a
+     * resource with no front-end view to preview can use drafts on their own.
+     *
+     * @return array<int, Action|ActionGroup>
+     */
+    protected function getDraftHeaderActions(): array
+    {
+        return array_values(array_filter([
+            method_exists($this, 'getLivePreviewAction') ? $this->getLivePreviewAction() : null,
+            $this->getSwitchVersionAction(),
+            $this->getSaveFormAction()->submit(null)->action('save'),
+            $this->getSaveDraftAction(),
+            $this->getPublishAction(),
+        ]));
+    }
+
     protected function getSaveDraftAction(): Action
     {
         return SaveDraftAction::make('saveDraft')

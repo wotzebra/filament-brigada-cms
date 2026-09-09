@@ -115,11 +115,9 @@ class EditPage extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            $this->getLivePreviewAction(),
-            $this->getSwitchVersionAction(),
-            $this->getSaveFormAction()->submit(null)->action('save'),
-            $this->getSaveDraftAction(),
-            $this->getPublishAction(),
+            ...$this->getDraftHeaderActions(),
+            // your own actions after these
+            DeleteAction::make(),
         ];
     }
 
