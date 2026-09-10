@@ -167,6 +167,39 @@ protected function plugins(): array
 }
 ```
 
+## Onboarding
+
+Four guided journeys ship with the package, describing the panel every Brigada CMS
+has: publishing a page, images and crops, menus and redirects. New editors find
+them under **Getting started** in the user menu.
+
+Journeys are database rows, so they exist on one machine unless they travel:
+
+```bash
+php artisan onboarding:export   # panel → database/onboarding/
+php artisan onboarding:import   # database/onboarding/ → this environment
+```
+
+`onboarding:import` runs on deploy. It applies the journeys this package ships
+first, then the project's own `database/onboarding/` — so a project adds journeys
+about the things only it has, and a file sharing a name with a shipped one
+replaces it outright. Nothing it does touches progress: what people have actually
+completed belongs to the environment they completed it in.
+
+Everything is addressed by its natural key, so a second run converges rather than
+duplicating. `--prune` removes flows that are no longer in the fixtures,
+`--dry-run` reports without writing, and `--app-only` skips the shipped four.
+
+Shield gates the flow, step and condition resources — the plugin's own policies
+let anybody who can reach the panel rewrite a journey. A project that has named
+its own policies keeps them.
+
+> Tours point at fields by name, and a field inside translatable tabs renders
+> under a locale-prefixed state path. Resolving those needs
+> [wallacemartinss/filament-onboarding#16](https://github.com/wallacemartinss/filament-onboarding/pull/16);
+> until it is released, tours on translated forms will find fewer targets than
+> they name.
+
 ## Overriding
 
 Every method on `BrigadaPanelProvider` is a seam. Append rather than replace:

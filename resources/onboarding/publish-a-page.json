@@ -1,0 +1,183 @@
+{
+    "color": null,
+    "description": {
+        "en": "Where pages live, how you write one, and how you put it online."
+    },
+    "icon": null,
+    "is_active": true,
+    "is_dismissible": true,
+    "key": "publish-a-page",
+    "panel_id": "admin",
+    "sort_order": 1,
+    "title": {
+        "en": "Publish a page"
+    },
+    "visibility_condition": null,
+    "steps": [
+        {
+            "completion_mode": "manual",
+            "condition_key": null,
+            "cta_label": null,
+            "cta_route": "filament.admin.resources.pages.index",
+            "cta_url": null,
+            "description": {
+                "en": "The list, the search box, and the button a new page starts from."
+            },
+            "icon": null,
+            "is_active": true,
+            "is_required": true,
+            "key": "find-the-pages",
+            "media_caption": null,
+            "media_disk": null,
+            "media_path": null,
+            "media_source": null,
+            "media_type": "none",
+            "media_url": null,
+            "modal_position": null,
+            "sort_order": 1,
+            "title": {
+                "en": "Find the pages"
+            },
+            "tour_steps": [
+                {
+                    "body": {
+                        "en": "Published and draft sit together in one list."
+                    },
+                    "route": "filament.admin.resources.pages.index",
+                    "title": {
+                        "en": "Every page"
+                    },
+                    "target": "part:table",
+                    "placement": "top"
+                },
+                {
+                    "body": {
+                        "en": "Searches the working title, not the translated one."
+                    },
+                    "route": "filament.admin.resources.pages.index",
+                    "title": {
+                        "en": "Search"
+                    },
+                    "target": "part:search",
+                    "placement": "bottom"
+                },
+                {
+                    "body": {
+                        "en": "A page can be live in Dutch and not in French. This column tells you which."
+                    },
+                    "route": "filament.admin.resources.pages.index",
+                    "title": {
+                        "en": "Online per language"
+                    },
+                    "target": "column:online",
+                    "placement": "bottom"
+                },
+                {
+                    "body": {
+                        "en": "This is where a page begins."
+                    },
+                    "route": "filament.admin.resources.pages.index",
+                    "title": {
+                        "en": "Start a new page"
+                    },
+                    "target": "link:filament.admin.resources.pages.create",
+                    "placement": "bottom"
+                }
+            ],
+            "type": "tour",
+            "video_completion_threshold": 90,
+            "visibility_condition": null,
+            "visit_url": null
+        },
+        {
+            "completion_mode": "manual",
+            "condition_key": null,
+            "cta_label": null,
+            "cta_route": "filament.admin.resources.pages.create",
+            "cta_url": null,
+            "description": {
+                "en": "The fields that matter, and the language tabs they live behind."
+            },
+            "icon": null,
+            "is_active": true,
+            "is_required": true,
+            "key": "write-the-page",
+            "media_caption": null,
+            "media_disk": null,
+            "media_path": null,
+            "media_source": null,
+            "media_type": "none",
+            "media_url": null,
+            "modal_position": null,
+            "sort_order": 2,
+            "title": {
+                "en": "Write the page"
+            },
+            "tour_steps": [
+                {
+                    "body": {
+                        "en": "For you, not for visitors. It never appears on the site."
+                    },
+                    "route": "filament.admin.resources.pages.create",
+                    "title": {
+                        "en": "Working title"
+                    },
+                    "target": "field:working_title",
+                    "advance": "[data-tab-key=\"default\"]",
+                    "placement": "bottom"
+                },
+                {
+                    "body": {
+                        "en": "The one visitors read. There is one per language — this is the Dutch tab, and French has its own."
+                    },
+                    "route": "filament.admin.resources.pages.create",
+                    "title": {
+                        "en": "Title"
+                    },
+                    "target": "field:title",
+                    "advance": "[data-tab-key=\"nl\"]",
+                    "placement": "bottom"
+                },
+                {
+                    "body": {
+                        "en": "Blocks, stacked. Add them, drag them, remove them."
+                    },
+                    "route": "filament.admin.resources.pages.create",
+                    "title": {
+                        "en": "The page itself"
+                    },
+                    "target": "field:body",
+                    "advance": "[data-tab-key=\"nl\"]",
+                    "placement": "top"
+                },
+                {
+                    "body": {
+                        "en": "Off until you turn it on, and only for the language you are on."
+                    },
+                    "route": "filament.admin.resources.pages.create",
+                    "title": {
+                        "en": "Put it online"
+                    },
+                    "target": "field:online",
+                    "advance": "[data-tab-key=\"nl\"]",
+                    "placement": "top"
+                },
+                {
+                    "body": {
+                        "en": "Saves a draft. Publishing is a separate button."
+                    },
+                    "route": "filament.admin.resources.pages.create",
+                    "title": {
+                        "en": "Save it"
+                    },
+                    "target": "action:submit",
+                    "placement": "bottom"
+                }
+            ],
+            "type": "tour",
+            "video_completion_threshold": 90,
+            "visibility_condition": null,
+            "visit_url": null
+        }
+    ]
+}

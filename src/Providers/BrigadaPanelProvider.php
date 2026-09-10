@@ -6,14 +6,15 @@ use AlizHarb\ActivityLog\ActivityLogPlugin;
 use Awcodes\StickyHeader\StickyHeaderPlugin;
 use AzGasim\FilamentUnsavedChangesModal\FilamentUnsavedChangesModalPlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Enums\Width;
+use Filament\Support\Icons\Heroicon;
 use Filament\View\PanelsRenderHook;
-use Pboivin\FilamentPeek\FilamentPeekPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -21,7 +22,10 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Pboivin\FilamentPeek\FilamentPeekPlugin;
 use pxlrbt\FilamentEnvironmentIndicator\EnvironmentIndicatorPlugin;
+use Wallacemartinss\FilamentOnboarding\FilamentOnboardingPlugin;
+use Wallacemartinss\FilamentOnboarding\Pages\OnboardingProgress;
 use Wezlo\FilamentSearchSpotlight\Categories\RecordsCategory;
 use Wezlo\FilamentSearchSpotlight\FilamentSearchSpotlightPlugin;
 use Wotz\FilamentBrigadaCms\Filament\Spotlight\AccessAwareActionsCategory;
@@ -115,6 +119,9 @@ abstract class BrigadaPanelProvider extends PanelProvider
                 ->disablePluginScripts()
                 ->disablePluginStyles(),
             'spotlight' => FilamentSearchSpotlightPlugin::make()->categories($this->spotlightCategories()),
+            'onboarding' => FilamentOnboardingPlugin::make()
+                ->manageFlows()
+                ->progressPage(),
         ];
     }
 
@@ -166,8 +173,30 @@ abstract class BrigadaPanelProvider extends PanelProvider
     /**
      * @return array<int, mixed>
      */
+    /**
+     * The panel builds its sidebar from NavigationGroup, and the onboarding page
+     * belongs to none of those groups: it is about using the panel rather than
+     * about any of the content in it. Left to the sidebar it has nowhere to
+     * appear, and can be reached only by typing the URL.
+     *
+     * The user menu is where somebody looks for things about their own account
+     * and their own way of working, which is what a guided tour is.
+     */
     protected function userMenuItems(): array
     {
-        return [];
+        return [
+            Action::make('onboarding')
+                /*
+                 * Lazily, because this runs while the panel registers — before
+                 * the package's own translations are. Resolved here and now, the
+                 * lookup misses and the translator caches the whole `cms` group
+                 * as empty for the rest of the request, taking every other
+                 * string in it down too.
+                 */
+                ->label(fn (): string => __('filament-brigada-cms::cms.onboarding.menu'))
+                ->icon(Heroicon::OutlinedAcademicCap)
+                ->url(fn (): string => OnboardingProgress::getUrl())
+                ->visible(fn (): bool => config('filament-brigada-cms.onboarding.user_menu', true)),
+        ];
     }
 }
