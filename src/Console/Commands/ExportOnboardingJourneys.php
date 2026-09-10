@@ -20,7 +20,7 @@ use Wallacemartinss\FilamentOnboarding\Models\OnboardingFlow;
  * Only the authored content travels. The three progress tables are per-subject
  * state and belong to the environment they were earned in.
  */
-#[Signature('onboarding:export {--flow=* : Export only these flow keys} {--dry-run : Show what would be written without writing}')]
+#[Signature('onboarding:export {--flow=* : Export only these flow keys} {--dry-run : Show what would be written without writing} {--all : Include journeys this package ships, taking a copy this project then owns}')]
 #[Description('Export onboarding journeys from the database to database/onboarding/')]
 class ExportOnboardingJourneys extends Command
 {
@@ -69,6 +69,15 @@ class ExportOnboardingJourneys extends Command
         }
 
         foreach ($flows as $flow) {
+            if ($this->isShipped($flow, $directory)) {
+                $this->components->twoColumnDetail(
+                    "flow <fg=gray>{$flow->key}</>",
+                    '<fg=gray>shipped by the package — skipped</>',
+                );
+
+                continue;
+            }
+
             $this->write("{$directory}/{$flow->key}.json", $this->flowToArray($flow));
         }
 
@@ -147,6 +156,32 @@ class ExportOnboardingJourneys extends Command
     /**
      * @param  array<mixed>  $data
      */
+    /**
+     * Whether this journey came from the package rather than from this project.
+     *
+     * Export exists so a journey written in the panel can travel as code, and
+     * the shipped ones already do. Writing them here would take a copy that
+     * silently overrides the package's own from then on — including the
+     * improvements it makes later — and nobody asked for that by running an
+     * export.
+     *
+     * A project that already has a file for the key has said otherwise: it owns
+     * that journey, and export keeps it up to date. `--all` says it deliberately
+     * for the rest.
+     */
+    private function isShipped(OnboardingFlow $flow, string $directory): bool
+    {
+        if ($this->option('all')) {
+            return false;
+        }
+
+        if (File::exists("{$directory}/{$flow->key}.json")) {
+            return false;
+        }
+
+        return File::exists(__DIR__ . "/../../../resources/onboarding/{$flow->key}.json");
+    }
+
     private function write(string $path, array $data): void
     {
         $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL;

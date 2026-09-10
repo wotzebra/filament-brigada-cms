@@ -33,9 +33,13 @@ class BrigadaCmsServiceProvider extends PackageServiceProvider
             ->hasTranslations();
     }
 
-    public function bootingPackage(): void
+    public function packageRegistered(): void
     {
         $this->configureOnboarding();
+    }
+
+    public function bootingPackage(): void
+    {
         $this->configureTables();
         $this->configureLabels();
         $this->configureNavigationGroups();
@@ -54,6 +58,10 @@ class BrigadaCmsServiceProvider extends PackageServiceProvider
      *
      * Set, never overwritten: a project that has published the plugin's config
      * and named its own policies keeps them.
+     *
+     * In `packageRegistered()`, because the plugin hands its policies to the
+     * Gate while booting. Set any later and the Gate already holds the
+     * permissive default, and the config change is read by nobody.
      */
     protected function configureOnboarding(): void
     {
