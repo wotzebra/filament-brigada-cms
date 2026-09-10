@@ -52,3 +52,15 @@ it('leaves labels to Filament when a project turns humanising off', function () 
     expect(TextColumn::make('amount_including_vat')->getLabel())->toBe('Amount including vat')
         ->and(TextInput::make('amount_including_vat')->getLabel())->toBe('Amount including vat');
 });
+
+it('names a field after its own segment, not the one above it', function () {
+    /*
+     * A component's name is often a state path rather than a bare attribute:
+     * `data.title`, or `form.nl.title` for a field inside translatable tabs.
+     * Taking the second-to-last segment labelled those "Data" and "Nl" — every
+     * translated field in a panel named after its locale.
+     */
+    expect(Labels::humanise('data.title'))->toBe('Title')
+        ->and(Labels::humanise('form.nl.working_title'))->toBe('Working title')
+        ->and(Labels::humanise('title'))->toBe('Title');
+});
