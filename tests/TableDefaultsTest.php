@@ -70,3 +70,36 @@ it('configures tables under Livewire::test, where Filament::serving never fires'
     expect(Filament::getCurrentPanel())->not->toBeNull()
         ->and(articleTable()->getRecordUrl($article))->toBeNull();
 });
+
+it('paginates in the sizes an editor actually wants', function () {
+    $table = Livewire::test(ListArticles::class)->instance()->getTable();
+
+    expect($table->getPaginationPageOptions())->toBe([10, 20, 50])
+        ->and($table->getDefaultPaginationPageOption())->toBe(20);
+});
+
+it('takes its pagination from config', function () {
+    $this->rebootWithConfig([
+        'filament-brigada-cms.tables.pagination_options' => [5, 25],
+        'filament-brigada-cms.tables.default_pagination' => 25,
+    ]);
+
+    $table = Livewire::test(ListArticles::class)->instance()->getTable();
+
+    expect($table->getPaginationPageOptions())->toBe([5, 25])
+        ->and($table->getDefaultPaginationPageOption())->toBe(25);
+});
+
+it('leaves pagination alone when the table defaults are switched off', function () {
+    /*
+     * These two used to be set alongside the display formats, which nothing
+     * guards — so the kill switch turned off every table default except the two
+     * that were hardest to notice, and those two were also absent under
+     * `Livewire::test` while their neighbours were not.
+     */
+    $this->rebootWithConfig(['filament-brigada-cms.tables.enabled' => false]);
+
+    $table = Livewire::test(ListArticles::class)->instance()->getTable();
+
+    expect($table->getDefaultPaginationPageOption())->not->toBe(20);
+});

@@ -66,6 +66,10 @@ class BrigadaCmsServiceProvider extends PackageServiceProvider
                     ->persistSearchInSession()
                     ->persistColumnSearchesInSession();
             }
+
+            $table
+                ->paginated(config('filament-brigada-cms.tables.pagination_options', [10, 20, 50]))
+                ->defaultPaginationPageOption(config('filament-brigada-cms.tables.default_pagination', 20));
         });
     }
 
@@ -112,8 +116,6 @@ class BrigadaCmsServiceProvider extends PackageServiceProvider
 
         Table::configureUsing(function (Table $table) use ($dateTime, $date, $currency): void {
             $table
-                ->paginated(config('filament-brigada-cms.tables.pagination_options', [10, 20, 50]))
-                ->defaultPaginationPageOption(config('filament-brigada-cms.tables.default_pagination', 20))
                 ->defaultDateTimeDisplayFormat($dateTime)
                 ->defaultDateDisplayFormat($date)
                 ->defaultCurrency($currency);

@@ -25,20 +25,10 @@ it('formats a form the same way it formats a table', function () {
         ->and($schema->getDefaultCurrency())->toBe('EUR');
 });
 
-it('paginates in the sizes an editor actually wants', function () {
-    ServingFilament::dispatch();
-
-    $table = Livewire::test(ListArticles::class)->instance()->getTable();
-
-    expect($table->getPaginationPageOptions())->toBe([10, 20, 50])
-        ->and($table->getDefaultPaginationPageOption())->toBe(20);
-});
-
 it('takes its formats from config', function () {
     $this->rebootWithConfig([
         'filament-brigada-cms.formats.date' => 'Y-m-d',
         'filament-brigada-cms.formats.currency' => 'GBP',
-        'filament-brigada-cms.tables.default_pagination' => 100,
     ]);
 
     ServingFilament::dispatch();
@@ -46,8 +36,7 @@ it('takes its formats from config', function () {
     $table = Livewire::test(ListArticles::class)->instance()->getTable();
 
     expect($table->getDefaultDateDisplayFormat())->toBe('Y-m-d')
-        ->and($table->getDefaultCurrency())->toBe('GBP')
-        ->and($table->getDefaultPaginationPageOption())->toBe(100);
+        ->and($table->getDefaultCurrency())->toBe('GBP');
 });
 
 it('has no formats at all until a panel is served', function () {
