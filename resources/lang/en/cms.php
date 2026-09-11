@@ -21,6 +21,13 @@ return [
         'publish' => 'Publish',
         'save_draft' => 'Save to new draft',
         'create_draft' => 'Create draft',
+        'preview' => 'Preview',
+        'state' => [
+            'published' => 'Published',
+            'draft' => 'Draft',
+        ],
+        'version_history' => 'Version history',
+        'save' => 'Save draft',
         'version' => 'Version',
     ],
 

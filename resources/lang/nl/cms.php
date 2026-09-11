@@ -21,6 +21,13 @@ return [
         'publish' => 'Publiceren',
         'save_draft' => 'Opslaan als nieuw concept',
         'create_draft' => 'Concept aanmaken',
+        'preview' => 'Voorbeeld',
+        'state' => [
+            'published' => 'Gepubliceerd',
+            'draft' => 'Concept',
+        ],
+        'version_history' => 'Versiegeschiedenis',
+        'save' => 'Concept opslaan',
         'version' => 'Versie',
     ],
 
