@@ -33,7 +33,7 @@
         "wotz/filament-admin-bar": "^2.1",
         "wotz/filament-architect": "^3.1",
         "wotz/filament-belongs-to-many": "^2.2",
-        "wotz/filament-brigada-theme": "^0.1",
+        "wotz/filament-brigada-theme": "^0.2",
         "wotz/filament-custom-tiptap-extensions": "^2.2",
         "wotz/filament-image-or-video": "^2.2",
         "wotz/filament-link-picker": "^2.2",
