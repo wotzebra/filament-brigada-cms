@@ -10,11 +10,14 @@ class Labels
      * Filament derives labels from component names, which lower-cases acronyms —
      * "Amount including vat", "Image id", "Seo". Add project-specific acronyms through
      * `filament-brigada-cms.acronyms` rather than editing this list.
+     *
+     * A name may be a state path rather than a bare attribute — `data.title`, or
+     * `form.nl.title` inside translatable tabs — and it is the last segment that
+     * names the thing. Filament's own default takes the same one.
      */
     public static function humanise(string $name): string
     {
         $label = (string) str($name)
-            ->beforeLast('.')
             ->afterLast('.')
             ->kebab()
             ->replace(['-', '_'], ' ')
