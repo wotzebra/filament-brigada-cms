@@ -11,7 +11,7 @@
     "homepage": "https://github.com/wotzebra/filament-brigada-cms",
     "license": "MIT",
     "require": {
-        "php": "^8.3",
+        "php": "^8.4",
         "alizharb/filament-activity-log": "^2.0",
         "awcodes/filament-sticky-header": "^4.0",
         "awcodes/richer-editor": "^2.1",
