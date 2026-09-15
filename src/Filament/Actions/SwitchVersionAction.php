@@ -5,6 +5,7 @@ namespace Wotz\FilamentBrigadaCms\Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Model;
@@ -15,8 +16,9 @@ class SwitchVersionAction extends ActionGroup
     {
         parent::setUp();
 
-        $this->label(__('filament-brigada-cms::cms.drafts.version'))
-            ->icon(Heroicon::Clock)
+        $this->label(__('filament-brigada-cms::cms.drafts.version_history'))
+            ->icon(Heroicon::ChevronDown)
+            ->iconPosition(IconPosition::After)
             ->button()
             ->dropdown()
             ->dropdownWidth(Width::ExtraSmall)
