@@ -11,6 +11,8 @@ use Filament\Tables\Columns\Column;
 use Filament\Tables\Table;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Wotz\FilamentBrigadaCms\Console\Commands;
+use Wotz\FilamentBrigadaCms\Policies;
 use Wotz\FilamentBrigadaCms\Support\Labels;
 
 class BrigadaCmsServiceProvider extends PackageServiceProvider
@@ -23,8 +25,17 @@ class BrigadaCmsServiceProvider extends PackageServiceProvider
             ->name($this->packageName())
             ->setBasePath(__DIR__ . '/../')
             ->hasConfigFile()
+            ->hasCommands([
+                Commands\ExportOnboardingJourneys::class,
+                Commands\ImportOnboardingJourneys::class,
+            ])
             ->hasViews($this->packageName())
             ->hasTranslations();
+    }
+
+    public function packageRegistered(): void
+    {
+        $this->configureOnboarding();
     }
 
     public function bootingPackage(): void
@@ -36,6 +47,44 @@ class BrigadaCmsServiceProvider extends PackageServiceProvider
         Filament::serving(function (): void {
             $this->configureFormatting();
         });
+    }
+
+    /**
+     * The onboarding plugin ships permissive policies on purpose — anybody who
+     * can reach the panel may write journeys, until the application says
+     * otherwise. Every other resource in a Brigada panel is gated by Shield, and
+     * this is no different, so the policies are set here rather than left to
+     * each project to remember.
+     *
+     * Set, never overwritten: a project that has published the plugin's config
+     * and named its own policies keeps them.
+     *
+     * In `packageRegistered()`, because the plugin hands its policies to the
+     * Gate while booting. Set any later and the Gate already holds the
+     * permissive default, and the config change is read by nobody.
+     */
+    protected function configureOnboarding(): void
+    {
+        if (! config('filament-brigada-cms.onboarding.enabled', true)) {
+            return;
+        }
+
+        foreach (['flow' => Policies\OnboardingFlowPolicy::class, 'step' => Policies\OnboardingStepPolicy::class, 'condition' => Policies\OnboardingConditionPolicy::class] as $key => $policy) {
+            if (blank(config("filament-onboarding.policies.{$key}"))) {
+                config()->set("filament-onboarding.policies.{$key}", $policy);
+            }
+        }
+
+        /*
+         * Journeys are written per locale, and the panel offers the locales the
+         * project actually publishes in rather than the plugin's default of
+         * English alone.
+         */
+        $locales = config('filament-brigada-cms.onboarding.locales');
+
+        if (filled($locales)) {
+            config()->set('filament-onboarding.locales', $locales);
+        }
     }
 
     /**

@@ -2,6 +2,10 @@
 
 return [
 
+    'onboarding' => [
+        'menu' => 'Aan de slag',
+    ],
+
     'read_only' => [
         'badge' => 'Alleen-lezen',
         'tooltip' => 'Deze resource wordt gesynchroniseerd vanuit een extern systeem en kan hier niet aangepast worden.',
@@ -17,6 +21,13 @@ return [
         'publish' => 'Publiceren',
         'save_draft' => 'Opslaan als nieuw concept',
         'create_draft' => 'Concept aanmaken',
+        'preview' => 'Voorbeeld',
+        'state' => [
+            'published' => 'Gepubliceerd',
+            'draft' => 'Concept',
+        ],
+        'version_history' => 'Versiegeschiedenis',
+        'save' => 'Concept opslaan',
         'version' => 'Versie',
     ],
 

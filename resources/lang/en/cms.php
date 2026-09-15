@@ -2,6 +2,10 @@
 
 return [
 
+    'onboarding' => [
+        'menu' => 'Getting started',
+    ],
+
     'read_only' => [
         'badge' => 'Read-only',
         'tooltip' => 'This resource is synced from an external system and cannot be modified here.',
@@ -17,6 +21,13 @@ return [
         'publish' => 'Publish',
         'save_draft' => 'Save to new draft',
         'create_draft' => 'Create draft',
+        'preview' => 'Preview',
+        'state' => [
+            'published' => 'Published',
+            'draft' => 'Draft',
+        ],
+        'version_history' => 'Version history',
+        'save' => 'Save draft',
         'version' => 'Version',
     ],
 

@@ -55,4 +55,25 @@ return [
         'collapse_groups' => true,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Onboarding
+    |--------------------------------------------------------------------------
+    |
+    | The guided journeys a new editor is walked through. Four ship with this
+    | package, describing the panel every Brigada CMS has; `onboarding:import`
+    | applies those and then the project's own `database/onboarding/`, where a
+    | file of the same name replaces a shipped one.
+    |
+    | `locales` are the languages a journey may be written in — usually the ones
+    | the site publishes in. Left empty, the plugin's own default stands.
+    |
+    */
+
+    'onboarding' => [
+        'enabled' => true,
+        'user_menu' => true,
+        'locales' => [],
+    ],
+
 ];

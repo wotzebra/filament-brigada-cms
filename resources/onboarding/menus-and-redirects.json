@@ -1,0 +1,124 @@
+{
+    "color": null,
+    "description": {
+        "en": "Where the navigation comes from, and what to do when a URL changes."
+    },
+    "icon": null,
+    "is_active": true,
+    "is_dismissible": true,
+    "key": "menus-and-redirects",
+    "panel_id": "admin",
+    "sort_order": 3,
+    "title": {
+        "en": "Menus and redirects"
+    },
+    "visibility_condition": null,
+    "steps": [
+        {
+            "completion_mode": "manual",
+            "condition_key": null,
+            "cta_label": null,
+            "cta_route": "filament.admin.resources.menus.index",
+            "cta_url": null,
+            "description": {
+                "en": "The navigation on the site is not code — you edit it here."
+            },
+            "icon": null,
+            "is_active": true,
+            "is_required": true,
+            "key": "the-menus",
+            "media_caption": null,
+            "media_disk": null,
+            "media_path": null,
+            "media_source": null,
+            "media_type": "none",
+            "media_url": null,
+            "modal_position": null,
+            "sort_order": 1,
+            "title": {
+                "en": "The menus"
+            },
+            "tour_steps": [
+                {
+                    "body": {
+                        "en": "Main navigation, footer, and the rest. Each one has its own place on the site."
+                    },
+                    "route": "filament.admin.resources.menus.index",
+                    "title": {
+                        "en": "Every menu"
+                    },
+                    "target": "part:table",
+                    "placement": "top"
+                },
+                {
+                    "body": {
+                        "en": "This is how the site fetches the menu. Do not change it — the working title is yours to change."
+                    },
+                    "route": "filament.admin.resources.menus.index",
+                    "title": {
+                        "en": "Identifier"
+                    },
+                    "target": "column:identifier",
+                    "placement": "bottom"
+                }
+            ],
+            "type": "tour",
+            "video_completion_threshold": 90,
+            "visibility_condition": null,
+            "visit_url": null
+        },
+        {
+            "completion_mode": "manual",
+            "condition_key": null,
+            "cta_label": null,
+            "cta_route": "filament.admin.resources.redirects.index",
+            "cta_url": null,
+            "description": {
+                "en": "When a URL changes, a redirect goes with it — make it straight away, not later. New redirects come from the button above the list."
+            },
+            "icon": null,
+            "is_active": true,
+            "is_required": true,
+            "key": "the-redirects",
+            "media_caption": null,
+            "media_disk": null,
+            "media_path": null,
+            "media_source": null,
+            "media_type": "none",
+            "media_url": null,
+            "modal_position": null,
+            "sort_order": 2,
+            "title": {
+                "en": "Redirects"
+            },
+            "tour_steps": [
+                {
+                    "body": {
+                        "en": "The old URL, the one that no longer exists."
+                    },
+                    "route": "filament.admin.resources.redirects.index",
+                    "title": {
+                        "en": "From"
+                    },
+                    "target": "column:from",
+                    "placement": "bottom"
+                },
+                {
+                    "body": {
+                        "en": "Where the visitor lands. Pick the closest page, not the homepage."
+                    },
+                    "route": "filament.admin.resources.redirects.index",
+                    "title": {
+                        "en": "To"
+                    },
+                    "target": "column:to",
+                    "placement": "bottom"
+                }
+            ],
+            "type": "tour",
+            "video_completion_threshold": 90,
+            "visibility_condition": null,
+            "visit_url": null
+        }
+    ]
+}
