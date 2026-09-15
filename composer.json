@@ -44,7 +44,7 @@
         "wotz/filament-resource-picker": "^2.1",
         "wotz/filament-seo": "^4.0",
         "wotz/filament-settings": "^2.3",
-        "wotz/filament-table-filter-presets": "^0.5",
+        "wotz/filament-table-filter-presets": "^0.6",
         "wotz/filament-translatable-strings": "^3.0",
         "wotz/filament-translatable-tabs": "^3.0",
         "wotz/laravel-locale-collection": "^2.1",
