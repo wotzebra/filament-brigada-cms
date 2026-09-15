@@ -83,10 +83,11 @@ it('publishes the draft that is open', function () {
 it('offers publishing only while there is something unpublished to publish', function () {
     Livewire::test(EditPage::class, ['record' => draftPage()->getKey()])
         ->assertActionVisible('publish')
-        ->assertActionHidden('saveDraft');
+        // A draft has no live version to draft against, so the bar leaves the button out.
+        ->assertActionDoesNotExist('saveDraft');
 
     Livewire::test(EditPage::class, ['record' => publishedPage()->getKey()])
-        ->assertActionHidden('publish')
+        ->assertActionDoesNotExist('publish')
         // Saving over a live page is what the draft button is there to avoid.
         ->assertActionVisible('saveDraft');
 });
