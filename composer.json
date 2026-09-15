@@ -22,7 +22,7 @@
         "oddvalue/laravel-drafts": "^3.1",
         "parfaitementweb/filament-password-input": "^4.1",
         "pboivin/filament-peek": "^4.0",
-        "php": "^8.3",
+        "php": "^8.4",
         "pxlrbt/filament-environment-indicator": "^3.4",
         "spatie/eloquent-sortable": "^5.0",
         "spatie/laravel-package-tools": "^1.12",
@@ -58,7 +58,7 @@
         "orchestra/testbench": "^10.0|^11.0",
         "pestphp/pest": "^3.0|^4.0",
         "pestphp/pest-plugin-laravel": "^3.0|^4.0",
-        "phpstan/extension-installer": "^2.0",
+        "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0"
     },
@@ -86,6 +86,10 @@
                 "Wotz\\FilamentBrigadaCms\\Providers\\BrigadaCmsServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage"
     },
     "support": {
         "email": "info@whoownsthezebra.be"
