@@ -1,0 +1,112 @@
+{
+    "color": null,
+    "description": {
+        "en": "Adding images, writing alt text, and cropping per format."
+    },
+    "icon": null,
+    "is_active": true,
+    "is_dismissible": true,
+    "key": "media-and-crops",
+    "panel_id": "admin",
+    "sort_order": 2,
+    "title": {
+        "en": "Images and crops"
+    },
+    "visibility_condition": null,
+    "steps": [
+        {
+            "completion_mode": "manual",
+            "condition_key": null,
+            "cta_label": null,
+            "cta_route": "filament.admin.resources.attachments.index",
+            "cta_url": null,
+            "description": {
+                "en": "Every image on the site lives here once, and is reused from here."
+            },
+            "icon": null,
+            "is_active": true,
+            "is_required": true,
+            "key": "the-media-library",
+            "media_caption": null,
+            "media_disk": null,
+            "media_path": null,
+            "media_source": null,
+            "media_type": "none",
+            "media_url": null,
+            "modal_position": null,
+            "sort_order": 1,
+            "title": {
+                "en": "The media library"
+            },
+            "tour_steps": [
+                {
+                    "body": {
+                        "en": "One library for the whole site. Do not delete anything without checking where it is used."
+                    },
+                    "route": "filament.admin.resources.attachments.index",
+                    "title": {
+                        "en": "Every image"
+                    },
+                    "target": "part:table",
+                    "placement": "top"
+                },
+                {
+                    "body": {
+                        "en": "The only way to find something again when the file name says nothing."
+                    },
+                    "route": "filament.admin.resources.attachments.index",
+                    "title": {
+                        "en": "Tags"
+                    },
+                    "target": "column:tags",
+                    "placement": "bottom"
+                },
+                {
+                    "body": {
+                        "en": "Searches the name. Tags are a filter, not a search term."
+                    },
+                    "route": "filament.admin.resources.attachments.index",
+                    "title": {
+                        "en": "Search"
+                    },
+                    "target": "part:search",
+                    "placement": "bottom"
+                }
+            ],
+            "type": "tour",
+            "video_completion_threshold": 90,
+            "visibility_condition": null,
+            "visit_url": null
+        },
+        {
+            "completion_mode": "manual",
+            "condition_key": null,
+            "cta_label": null,
+            "cta_route": null,
+            "cta_url": null,
+            "description": {
+                "en": "Open the media library from the step above, open an image and fill in its alt text: describe what is in the picture. Screen readers read it aloud, and Google reads it too. Crops per format are the actions on the image itself. Tick this off when you have done it."
+            },
+            "icon": null,
+            "is_active": true,
+            "is_required": true,
+            "key": "alt-text-and-crops",
+            "media_caption": null,
+            "media_disk": null,
+            "media_path": null,
+            "media_source": null,
+            "media_type": "none",
+            "media_url": null,
+            "modal_position": null,
+            "sort_order": 2,
+            "title": {
+                "en": "Alt text and crops"
+            },
+            "tour_steps": null,
+            "type": "task",
+            "video_completion_threshold": 90,
+            "visibility_condition": null,
+            "visit_url": null
+        }
+    ]
+}

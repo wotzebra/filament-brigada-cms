@@ -2,6 +2,10 @@
 
 return [
 
+    'onboarding' => [
+        'menu' => 'Getting started',
+    ],
+
     'read_only' => [
         'badge' => 'Read-only',
         'tooltip' => 'This resource is synced from an external system and cannot be modified here.',

@@ -2,6 +2,10 @@
 
 return [
 
+    'onboarding' => [
+        'menu' => 'Aan de slag',
+    ],
+
     'read_only' => [
         'badge' => 'Alleen-lezen',
         'tooltip' => 'Deze resource wordt gesynchroniseerd vanuit een extern systeem en kan hier niet aangepast worden.',
