@@ -13,6 +13,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\View;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Wotz\FilamentBrigadaCms\Console\Commands;
@@ -46,7 +47,7 @@ class BrigadaCmsServiceProvider extends PackageServiceProvider
         $this->app->bind(BaseSocialiteLoginController::class, SocialiteLoginController::class);
 
         /*
-         * The Brigada mark, as `brigada-icon`, for the "Login for Brigada" button.
+         * The Brigada logo, as `brigada-logo`, for the "Login for Brigada" button.
          */
         $this->callAfterResolving(IconFactory::class, function (IconFactory $icons): void {
             $icons->add($this->packageName(), [
@@ -63,6 +64,9 @@ class BrigadaCmsServiceProvider extends PackageServiceProvider
         $this->configureNavigationGroups();
 
         Event::listen(Login::class, [ZenithLogin::class, 'syncStaff']);
+
+        // The Zenith button shows the Brigada logo instead of its label.
+        View::prependNamespace('filament-socialite', __DIR__ . '/../../resources/views/filament-socialite');
 
         Filament::serving(function (): void {
             $this->configureFormatting();

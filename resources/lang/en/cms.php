@@ -7,6 +7,7 @@ return [
     ],
 
     'zenith' => [
+        'login_with' => 'Login with',
         'not_allowed' => "This account can't log in through Zenith.",
         'deactivated' => 'Your Zenith account is deactivated.',
     ],
