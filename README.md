@@ -233,6 +233,64 @@ Add your project's own acronyms there rather than editing the package:
 'acronyms' => [..., 'bc', 'btw', 'kkg', 'ogm'],
 ```
 
+## Login for Brigada (Zenith)
+
+Every Brigada panel has a "Login for Brigada" button under the login form. It logs WOTZ
+staff in through Zenith, using [filament-socialite](https://github.com/DutchCodingCompany/filament-socialite)
+with the [Zenith Socialite provider](https://github.com/wotzebra/socialite-zenith).
+
+- Whoever logs in through Zenith becomes a superadmin (Shield's `super_admin` role).
+- An existing account with the same email is linked only when it is a superadmin
+  already. A client account is refused, so it can never be promoted this way.
+- Accounts that are offline are refused, and a user deactivated in Zenith is sent back
+  to the login form.
+- Name and email follow Zenith on every login.
+
+The button shows once Zenith is configured. Add the client to `config/services.php`:
+
+```php
+'zenith' => [
+    'base_url' => env('ZENITH_URL'),
+    'client_id' => env('ZENITH_CLIENT_ID'),
+    'client_secret' => env('ZENITH_CLIENT_SECRET'),
+    'redirect' => env('ZENITH_REDIRECT_URI'),
+],
+```
+
+```dotenv
+ZENITH_URL=
+ZENITH_CLIENT_ID=
+ZENITH_CLIENT_SECRET=
+ZENITH_REDIRECT_URI="${APP_URL}/admin/oauth/callback/zenith"
+```
+
+The Zenith team creates the confidential client; the redirect URI must match exactly.
+
+Publish the `socialite_users` migration and point `user_id` at the panel's user table
+(e.g. `->constrained('administrators')`). Make that table's `password` nullable: Zenith
+accounts have none.
+
+```bash
+php artisan vendor:publish --tag=filament-socialite-migrations
+```
+
+A project's own SSO goes alongside it, with filament-socialite's own rules:
+
+```php
+protected function socialiteProviders(): array
+{
+    return [...parent::socialiteProviders(), 'graph' => Provider::make('graph')->label('Microsoft')];
+}
+
+protected function plugins(): array
+{
+    $plugins = parent::plugins();
+    $plugins['socialite']->registration(true)->domainAllowList(['client.be']);
+
+    return $plugins;
+}
+```
+
 ## Panel error page
 
 Point your `resources/views/errors/admin.blade.php` at the packaged one:

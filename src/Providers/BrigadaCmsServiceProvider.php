@@ -2,6 +2,8 @@
 
 namespace Wotz\FilamentBrigadaCms\Providers;
 
+use DutchCodingCompany\FilamentSocialite\Events\Login;
+use DutchCodingCompany\FilamentSocialite\Http\Controllers\SocialiteLoginController as BaseSocialiteLoginController;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Field;
 use Filament\Infolists\Components\Entry;
@@ -9,9 +11,12 @@ use Filament\Navigation\NavigationGroup;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Event;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Wotz\FilamentBrigadaCms\Console\Commands;
+use Wotz\FilamentBrigadaCms\Filament\Socialite\ZenithLogin;
+use Wotz\FilamentBrigadaCms\Http\Controllers\SocialiteLoginController;
 use Wotz\FilamentBrigadaCms\Policies;
 use Wotz\FilamentBrigadaCms\Support\Labels;
 
@@ -36,6 +41,8 @@ class BrigadaCmsServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         $this->configureOnboarding();
+
+        $this->app->bind(BaseSocialiteLoginController::class, SocialiteLoginController::class);
     }
 
     public function bootingPackage(): void
@@ -43,6 +50,8 @@ class BrigadaCmsServiceProvider extends PackageServiceProvider
         $this->configureTables();
         $this->configureLabels();
         $this->configureNavigationGroups();
+
+        Event::listen(Login::class, [ZenithLogin::class, 'syncStaff']);
 
         Filament::serving(function (): void {
             $this->configureFormatting();

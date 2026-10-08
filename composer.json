@@ -11,18 +11,19 @@
     "homepage": "https://github.com/wotzebra/filament-brigada-cms",
     "license": "MIT",
     "require": {
+        "php": "^8.4",
         "alizharb/filament-activity-log": "^2.0",
         "awcodes/filament-sticky-header": "^4.0",
         "awcodes/richer-editor": "^2.1",
         "azgasim/filament-unsaved-changes-modal": "^1.0",
         "bezhansalleh/filament-shield": "^4.1",
+        "dutchcodingcompany/filament-socialite": "^3.2",
         "filament/filament": "^5.5",
         "illuminate/contracts": "^12.0|^13.0",
         "livewire/livewire": "^4.0",
         "oddvalue/laravel-drafts": "^3.1",
         "parfaitementweb/filament-password-input": "^4.1",
         "pboivin/filament-peek": "^4.0",
-        "php": "^8.4",
         "pxlrbt/filament-environment-indicator": "^3.4",
         "spatie/eloquent-sortable": "^5.0",
         "spatie/laravel-package-tools": "^1.12",
@@ -49,7 +50,8 @@
         "wotz/filament-translatable-tabs": "^3.0",
         "wotz/laravel-locale-collection": "^2.1",
         "wotz/laravel-online-scope": "^2.1",
-        "wotz/laravel-translatable-routes": "^2.1"
+        "wotz/laravel-translatable-routes": "^2.1",
+        "wotz/socialite-zenith": "^0.1"
     },
     "require-dev": {
         "larastan/larastan": "^3.0",

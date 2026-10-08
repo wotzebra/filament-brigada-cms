@@ -4,6 +4,8 @@ namespace Wotz\FilamentBrigadaCms\Tests\Fixtures;
 
 use Filament\Panel;
 use Filament\PanelProvider;
+use Wotz\FilamentBrigadaCms\Filament\Socialite\BrigadaSocialitePlugin;
+use Wotz\FilamentBrigadaCms\Filament\Socialite\ZenithLogin;
 use Wotz\FilamentBrigadaCms\Tests\Fixtures\Resources\ArticleResource;
 use Wotz\FilamentBrigadaCms\Tests\Fixtures\Resources\PageResource;
 use Wotz\FilamentBrigadaCms\Tests\Fixtures\Resources\SyncedArticleResource;
@@ -20,6 +22,12 @@ class TestPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->login()
+            ->plugin(
+                BrigadaSocialitePlugin::make()->providers([
+                    ZenithLogin::PROVIDER => ZenithLogin::provider(),
+                ]),
+            )
             ->resources([
                 ArticleResource::class,
                 SyncedArticleResource::class,

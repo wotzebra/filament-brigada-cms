@@ -4,6 +4,7 @@ namespace Wotz\FilamentBrigadaCms\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
+use DutchCodingCompany\FilamentSocialite\FilamentSocialiteServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
 use Filament\Facades\Filament;
 use Filament\FilamentServiceProvider;
@@ -15,12 +16,16 @@ use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Laravel\Socialite\SocialiteServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Oddvalue\LaravelDrafts\LaravelDraftsServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Spatie\Permission\PermissionServiceProvider;
 use Wezlo\FilamentSearchSpotlight\FilamentSearchSpotlightServiceProvider;
 use Wotz\FilamentBrigadaCms\Providers\BrigadaCmsServiceProvider;
+use Wotz\FilamentBrigadaCms\Tests\Fixtures\Models\User;
 use Wotz\FilamentBrigadaCms\Tests\Fixtures\TestPanelProvider;
+use Wotz\SocialiteZenith\SocialiteZenithServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -57,6 +62,10 @@ class TestCase extends Orchestra
             LaravelDraftsServiceProvider::class,
             FilamentServiceProvider::class,
             FilamentSearchSpotlightServiceProvider::class,
+            PermissionServiceProvider::class,
+            SocialiteServiceProvider::class,
+            SocialiteZenithServiceProvider::class,
+            FilamentSocialiteServiceProvider::class,
             BrigadaCmsServiceProvider::class,
             TestPanelProvider::class,
         ];
@@ -65,6 +74,7 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
+        config()->set('auth.providers.users.model', User::class);
 
         foreach ($this->packageConfig as $key => $value) {
             config()->set($key, $value);
@@ -92,6 +102,33 @@ class TestCase extends Orchestra
 
     protected function createSchema(): void
     {
+        Schema::dropIfExists('users');
+
+        Schema::create('users', function ($table): void {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password')->nullable();
+            $table->boolean('online')->default(true);
+            $table->rememberToken();
+            $table->timestamps();
+        });
+
+        Schema::dropIfExists('socialite_users');
+
+        Schema::create('socialite_users', function ($table): void {
+            $table->id();
+            $table->foreignId('user_id');
+            $table->string('provider');
+            $table->string('provider_id');
+            $table->timestamps();
+            $table->unique(['provider', 'provider_id']);
+        });
+
+        if (! Schema::hasTable('roles')) {
+            (require __DIR__ . '/../vendor/spatie/laravel-permission/database/migrations/create_permission_tables.php.stub')->up();
+        }
+
         Schema::dropIfExists('articles');
 
         Schema::create('articles', function ($table): void {

@@ -6,6 +6,7 @@ use AlizHarb\ActivityLog\ActivityLogPlugin;
 use Awcodes\StickyHeader\StickyHeaderPlugin;
 use AzGasim\FilamentUnsavedChangesModal\FilamentUnsavedChangesModalPlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use DutchCodingCompany\FilamentSocialite\Provider;
 use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -28,6 +29,8 @@ use Wallacemartinss\FilamentOnboarding\FilamentOnboardingPlugin;
 use Wallacemartinss\FilamentOnboarding\Pages\OnboardingProgress;
 use Wezlo\FilamentSearchSpotlight\Categories\RecordsCategory;
 use Wezlo\FilamentSearchSpotlight\FilamentSearchSpotlightPlugin;
+use Wotz\FilamentBrigadaCms\Filament\Socialite\BrigadaSocialitePlugin;
+use Wotz\FilamentBrigadaCms\Filament\Socialite\ZenithLogin;
 use Wotz\FilamentBrigadaCms\Filament\Spotlight\AccessAwareActionsCategory;
 use Wotz\FilamentBrigadaCms\Filament\Spotlight\NavigationCategory;
 use Wotz\FilamentBrigadaCms\Http\Middleware\DisableDraftPreview;
@@ -122,6 +125,30 @@ abstract class BrigadaPanelProvider extends PanelProvider
             'onboarding' => FilamentOnboardingPlugin::make()
                 ->manageFlows()
                 ->progressPage(),
+            'socialite' => BrigadaSocialitePlugin::make()
+                ->providers($this->socialiteProviders())
+                ->showDivider(false),
+        ];
+    }
+
+    /**
+     * The login buttons under the email/password form. "Login for Brigada" (Zenith,
+     * for WOTZ staff) is always there and shows once `services.zenith` is configured;
+     * add a project's own SSO alongside it:
+     *
+     *     protected function socialiteProviders(): array
+     *     {
+     *         return [...parent::socialiteProviders(), 'graph' => Provider::make('graph')->label('Microsoft')];
+     *     }
+     *
+     * Those keep filament-socialite's own rules: configure them on `$plugins['socialite']`.
+     *
+     * @return array<string, Provider>
+     */
+    protected function socialiteProviders(): array
+    {
+        return [
+            ZenithLogin::PROVIDER => ZenithLogin::provider(),
         ];
     }
 
