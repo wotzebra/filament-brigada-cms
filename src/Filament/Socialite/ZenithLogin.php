@@ -29,6 +29,7 @@ class ZenithLogin
     {
         return Provider::make(self::PROVIDER)
             ->label('Login for Brigada')
+            ->icon('brigada-icon')
             ->color(Color::Gray)
             ->outlined()
             ->visible(fn (): bool => self::isConfigured());

@@ -63,7 +63,8 @@ it('adds the socialite plugin to every Brigada panel', function () {
 it('shows the Zenith button once Zenith is configured', function () {
     $this->get(Filament::getPanel('admin')->getLoginUrl())
         ->assertOk()
-        ->assertSee('Login for Brigada');
+        ->assertSee('Login for Brigada')
+        ->assertSee('M83.8866 123H24.2806', escape: false);
 });
 
 it('hides the Zenith button while Zenith is not fully configured', function () {

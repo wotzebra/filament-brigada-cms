@@ -2,6 +2,7 @@
 
 namespace Wotz\FilamentBrigadaCms\Providers;
 
+use BladeUI\Icons\Factory as IconFactory;
 use DutchCodingCompany\FilamentSocialite\Events\Login;
 use DutchCodingCompany\FilamentSocialite\Http\Controllers\SocialiteLoginController as BaseSocialiteLoginController;
 use Filament\Facades\Filament;
@@ -43,6 +44,16 @@ class BrigadaCmsServiceProvider extends PackageServiceProvider
         $this->configureOnboarding();
 
         $this->app->bind(BaseSocialiteLoginController::class, SocialiteLoginController::class);
+
+        /*
+         * The Brigada mark, as `brigada-icon`, for the "Login for Brigada" button.
+         */
+        $this->callAfterResolving(IconFactory::class, function (IconFactory $icons): void {
+            $icons->add($this->packageName(), [
+                'path' => __DIR__ . '/../../resources/svg',
+                'prefix' => 'brigada',
+            ]);
+        });
     }
 
     public function bootingPackage(): void
