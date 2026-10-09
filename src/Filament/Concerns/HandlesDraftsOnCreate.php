@@ -29,12 +29,7 @@ trait HandlesDraftsOnCreate
     protected function getDraftHeaderActions(): array
     {
         return array_values(array_filter([
-            /*
-             * Greyed deliberately: previewing is never the primary action on this page —
-             * saving is. `wotz/filament-live-preview` builds the group as `primary`, so
-             * without this a page shows two competing primary buttons.
-             */
-            method_exists($this, 'getLivePreviewAction') ? $this->getLivePreviewAction()->color('gray') : null,
+            method_exists($this, 'getLivePreviewAction') ? $this->getLivePreviewAction() : null,
             $this->getCreateFormAction()->submit(null)->action('create'),
             $this->getCreateAnotherFormAction(),
         ]));
