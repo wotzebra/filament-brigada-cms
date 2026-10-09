@@ -8,6 +8,9 @@
  *   @import '.../filament-brigada-cms/resources/css/filament-brigada-cms.css';
  */
 
+/* The views here use Tailwind utilities, so the importing theme compiles them too. */
+@source '../views';
+
 /* ---- Spotlight trigger, under the brand in the sidebar ------------------- */
 .fi-brigada-search {
     flex: 0 0 auto;

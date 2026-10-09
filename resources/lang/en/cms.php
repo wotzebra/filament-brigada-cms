@@ -6,6 +6,12 @@ return [
         'menu' => 'Getting started',
     ],
 
+    'zenith' => [
+        'login_with' => 'Login with',
+        'not_allowed' => "This account can't log in through Zenith.",
+        'deactivated' => 'Your Zenith account is deactivated.',
+    ],
+
     'read_only' => [
         'badge' => 'Read-only',
         'tooltip' => 'This resource is synced from an external system and cannot be modified here.',

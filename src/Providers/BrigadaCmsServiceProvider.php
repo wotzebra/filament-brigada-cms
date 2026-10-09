@@ -2,6 +2,9 @@
 
 namespace Wotz\FilamentBrigadaCms\Providers;
 
+use BladeUI\Icons\Factory as IconFactory;
+use DutchCodingCompany\FilamentSocialite\Events\Login;
+use DutchCodingCompany\FilamentSocialite\Http\Controllers\SocialiteLoginController as BaseSocialiteLoginController;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Field;
 use Filament\Infolists\Components\Entry;
@@ -9,9 +12,13 @@ use Filament\Navigation\NavigationGroup;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\View;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Wotz\FilamentBrigadaCms\Console\Commands;
+use Wotz\FilamentBrigadaCms\Filament\Socialite\ZenithLogin;
+use Wotz\FilamentBrigadaCms\Http\Controllers\SocialiteLoginController;
 use Wotz\FilamentBrigadaCms\Policies;
 use Wotz\FilamentBrigadaCms\Support\Labels;
 
@@ -36,6 +43,18 @@ class BrigadaCmsServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         $this->configureOnboarding();
+
+        $this->app->bind(BaseSocialiteLoginController::class, SocialiteLoginController::class);
+
+        /*
+         * The Brigada logo, as `brigada-logo`, for the "Login for Brigada" button.
+         */
+        $this->callAfterResolving(IconFactory::class, function (IconFactory $icons): void {
+            $icons->add($this->packageName(), [
+                'path' => __DIR__ . '/../../resources/svg',
+                'prefix' => 'brigada',
+            ]);
+        });
     }
 
     public function bootingPackage(): void
@@ -43,6 +62,11 @@ class BrigadaCmsServiceProvider extends PackageServiceProvider
         $this->configureTables();
         $this->configureLabels();
         $this->configureNavigationGroups();
+
+        Event::listen(Login::class, [ZenithLogin::class, 'syncStaff']);
+
+        // The Zenith button shows the Brigada logo instead of its label.
+        View::prependNamespace('filament-socialite', __DIR__ . '/../../resources/views/filament-socialite');
 
         Filament::serving(function (): void {
             $this->configureFormatting();

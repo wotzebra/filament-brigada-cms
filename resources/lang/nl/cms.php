@@ -6,6 +6,12 @@ return [
         'menu' => 'Aan de slag',
     ],
 
+    'zenith' => [
+        'login_with' => 'Inloggen met',
+        'not_allowed' => 'Dit account kan niet inloggen via Zenith.',
+        'deactivated' => 'Je Zenith-account is gedeactiveerd.',
+    ],
+
     'read_only' => [
         'badge' => 'Alleen-lezen',
         'tooltip' => 'Deze resource wordt gesynchroniseerd vanuit een extern systeem en kan hier niet aangepast worden.',
